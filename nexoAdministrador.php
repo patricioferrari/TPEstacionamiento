@@ -6,49 +6,31 @@ switch ($queHago) {
     case "mostrarGrilla":
 
 
-        require_once 'clases/MostrarJson.php';
+        require_once 'Estacionamiento.php';
         
-        $ArrayDeMascotas = MostrarJson::TraerTodosLasMascotas();
+        $ArrayDeAutos = Estacionamiento::TraerTodosLosAutos();
 
+        //echo $ArrayDeAutos[0]["id"]."//".$ArrayDeAutos[0]["patente"]."//".$ArrayDeAutos[0]["fingreso"];
+        //die();
 
         $grilla = '<table class="table">
                         <thead style="background:rgb(14, 26, 112);color:#fff;">
                                 <tr>
-                                    <th rowspan="2">  ID </th>
                                     <th rowspan="2">  PATENTE </th>
-                                    <th rowspan="2">  FECHA  </th>
-                                    <th style="text-align:center">  DUE&Ntilde;O </th>
+                                    <th rowspan="2">  FECHA INGRESO  </th>
                                 </tr> 
-                                <tr>
-                                    <th>
-                                        <table>
-                                            <thead style="background:rgb(14, 26, 112);color:#fff;">
-                                                <tr>
-                                                    <th> NOMBRE </th>
-                                                    <th> CIUDAD </th>
-                                                    <th> TELEFONO </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </th>
-                                </tr>
                         </thead>';
         $grilla .= '<tbody>';
 
-        foreach ($ArrayDeMascotas as $mascota) {
+        foreach ($ArrayDeAutos as $auto) {
             $grilla .= '<tr>';
-            $grilla .= '<td>' . $mascota["id"] .'</td>';
-            $grilla .= '<td>' . $mascota["nombre"] . '</td>';
-            $grilla .= '<td>' . $mascota["tipo"] . '</td>';
-            $grilla .= '<td><img src="' . $mascota["foto"] . '" /></td>';
-            $grilla .= '<td>' . $mascota["dueño"]["nombre"] . ' ';
-            $grilla .=  $mascota["dueño"]["datos"]["ciudad"] . ' ';
-            $grilla .=  $mascota["dueño"]["datos"]["telefono"] . '</td>';
-            //Armar filas con los datos de las mascotas
+            $grilla .= '<td>' . $auto["patente"] .'</td>';
+            $grilla .= '<td>' . $auto["fingreso"] . '</td>';
+
         }
-
+        $grilla .= '</tr>';
         $grilla .= '</table>';
-
+        $grilla .= '<tbody>';
         echo $grilla;
 
         break;
@@ -91,7 +73,6 @@ switch ($queHago) {
             $obj = json_decode(json_encode($_POST["auto"]));    
         }
 
-        var_dump($obj);
 
         if (!Estacionamiento::InsertarAuto($obj->patente))
         {

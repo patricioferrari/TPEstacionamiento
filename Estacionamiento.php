@@ -76,16 +76,17 @@ class Estacionamiento
 					
 	}
 	
-	public static function TraerTodasLasPersonas()
+	public static function TraerTodosLosAutos()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("select * from Estacionamiento");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select fingreso, patente from Estacionamiento where fsalida is null");
 		$consulta->execute();			
-		$arrEstacionamiento= $consulta->fetchAll(PDO::FETCH_CLASS, "Estacionamiento");	
+		//$arrEstacionamiento= $consulta->fetchAll(PDO::FETCH_CLASS, "Estacionamiento");
+		$arrEstacionamiento= $consulta->fetchAll();	
 		return $arrEstacionamiento;
 	}
 	
-	public static function BorrarAuto($id)
+	public static function BorrarAuto($idParametro)
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 		$consulta =$objetoAccesoDato->RetornarConsulta("delete from Estacionamiento	WHERE id=:id");		

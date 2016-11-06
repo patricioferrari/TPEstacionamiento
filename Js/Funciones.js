@@ -12,11 +12,11 @@ function MostrarGrilla() {
         data: {queHago: "mostrarGrilla"},
         async: true
         })
-        .done(function (tabla) {
+        .then(function ok(tabla) {
             
             $("#divGrilla").html(tabla);
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
+        }
+        ,function error(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
         });
 
@@ -33,11 +33,11 @@ function CargarFormAuto() {
         data: {queHago: "cargarForm"},
         async: true
         })
-        .done(function (form) {
+        .then(function ok (form) {
 
             $("#divFrm").html(form);
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
+        }
+        ,function error (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
         });
 }
