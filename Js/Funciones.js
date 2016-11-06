@@ -52,14 +52,15 @@ function CargarFormEliminarAuto() {
         dataType: "text",
         data: {queHago: "cargarFormEliminar"},
         async: true
-        })
-        .done(function (form) {
-
+        }).then(function ok(form)
+        {
             $("#divFrm").html(form);
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+
+        },function error(jqXHR, textStatus, errorThrown)
+        {
+            alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown); 
         });
+
 }
 
 function AgregarAuto() {
@@ -67,7 +68,7 @@ function AgregarAuto() {
     var pagina = "nexoAdministrador.php";
 
     var auto = {
-                    "patente":$("#txtPatente").val(),
+                    "patente":$("#txtPatente").val()
                 };//crear objeto JSON
     $.ajax({
         type: 'POST',
@@ -78,13 +79,13 @@ function AgregarAuto() {
             auto: auto
         },
         async: true
-    }).then(function ok(objJson){
+    }).then(function ok(objJson)
+        {
         if (!objJson.Exito) {
             alert(objJson.Mensaje);
             return;
         }
         alert(objJson.Mensaje);
-
 
     },function error(jqXHR, textStatus, errorThrown){
         alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
@@ -99,14 +100,14 @@ function EliminarAuto() {
     }
 
     var pagina  = "./nexoAdministrador.php";
-    var Id      = $("#txtIdMascota").val();
+    var Id      = $("#txtIdPatente").val();
 
     $.ajax({
         type: 'POST',
         url: pagina,
         dataType: "json",
         data: {
-            queHago: "eliminarMascota",
+            queHago: "elimninarAuto",
             idMascota: Id
         },
         async: true

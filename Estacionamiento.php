@@ -51,6 +51,20 @@ class Estacionamiento
 	  	return $this->patente."-".$this->fecha;
 	}
 
+
+
+	public static function InsertarAuto($patente)
+	{	
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into Estacionamiento (patente,fingreso,habilitado)values(:patente,:fecha,1)");
+		$consulta->bindValue(':patente',$patente, PDO::PARAM_STR);
+		$consulta->bindValue(':fecha', date("d-m-Y h:i:s"), PDO::PARAM_STR);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();
+	
+				
+	}	
+		
 	public static function TraerUnAuto($idParametro) 
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -81,16 +95,5 @@ class Estacionamiento
 		
 	}
 
-	public static function InsertarAuto($id)
-	{
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (patente,fecha)values(:patente,:fecha)");
-		$consulta->bindValue(':patente',$persona->patente, PDO::PARAM_STR);
-		$consulta->bindValue(':fecha', $persona->fecha, PDO::PARAM_STR);
-		$consulta->execute();		
-		return $objetoAccesoDato->RetornarUltimoIdInsertado();
-	
-				
-	}	
 
 }

@@ -69,9 +69,9 @@ switch ($queHago) {
     case "cargarFormEliminar":
 
         $form = '<form>   
-                    <input type="text" placeholder="Ingrese ID Mascota" id="txtIdMascota" />
+                    <input type="text" placeholder="Ingrese ID Auto" id="txtIdPatente" />
                     <br>
-                    <input type="button" class="MiBotonUTN" onclick="EliminarMascota()" value="Eliminar Mascota"  />
+                    <input type="button" class="MiBotonUTN" onclick="EliminarAuto()" value="Eliminar Auto"  />
                 </form>';
         
         echo $form;
@@ -81,69 +81,50 @@ switch ($queHago) {
     case "agregarAuto":
 
         require_once 'Estacionamiento.php';
+
         $retorno["Exito"] = TRUE;
         $retorno["Mensaje"] = "Se ha creado el AUTO";
         $obj = null;
-        echo json_encode($retorno);
-        die();
-
-        /*if(isset( $_POST['auto'] ))
-        {
-            $obj = json_decode(json_encode($_POST["auto"]),true);    
-        }*/
-        $obj =  isset( $_POST['auto'] ) ? json_decode(json_encode($_POST['auto'])) : NULL;
-
-        $auto = new Estacionamiento($obj->patente, $obj->fecha);
         
-        //echo var_dump($cel);
-        //die();        
+        if(isset( $_POST['auto'] ))
+        {
+            $obj = json_decode(json_encode($_POST["auto"]));    
+        }
 
-        if (!$cel->Agregar()) {
+        var_dump($obj);
+
+        if (!Estacionamiento::InsertarAuto($obj->patente))
+        {
             $retorno["Exito"] = FALSE;
-            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo AGREGAR el celular.";
+            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo agregar la patente.";
         } else {
-            $retorno["Mensaje"] = "El celular fue agregado CORRECTAMENTE!!!";
+            $retorno["Mensaje"] = "La patente fue agregada CORRECTAMENTE!!!";
         }
 
         echo json_encode($retorno);
 
         break;
 
-    case "eliminarMascota":
+    case "eliminarAuto":
         
-        require_once 'clases/Mascota.php';
+        require_once 'Estacionamiento.php';
         
         $retorno["Exito"] = TRUE;
         $retorno["Mensaje"] = "";
         
-        $idMascota = isset($_POST['idMascota']) ? $_POST['idMascota'] : NULL;
+        $idPatente = isset($_POST['idPatente']) ? $_POST['idPatente'] : NULL;
         
-//        echo  var_dump($idMascota);
+//        echo  var_dump($idPatente);
 //        die();
 
-        if (!Mascota::Eliminar($idMascota)) {
+        if (!Estacionamiento::Eliminar($idPatente)) {
             $retorno["Exito"] = FALSE;
-            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo ELIMINAR la mascota.";
+            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo ELIMINAR la patente.";
         } else {
-            $retorno["Mensaje"] = "La mascota fue eliminada CORRECTAMENTE!!!";
+            $retorno["Mensaje"] = "El auto fue eliminada CORRECTAMENTE!!!";
         }
 
         echo json_encode($retorno);
         break;
 
-        
-    case "cargarFormSubir":
-
-        $form = '<form>   
-                    <input type="file" placeholder="Ingrese ID Mascota" id="subir" />
-                    <br>
-                    <input type="button" class="MiBotonUTN" onclick="SubirArchivo()" value="Subir Archivo"  />
-                </form>';
-        
-        echo $form;
-        
-        break;
-
-    default:
-        echo ":(";
 }
