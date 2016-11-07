@@ -100,15 +100,18 @@ function EliminarAuto() {
     }
 
     var pagina  = "./nexoAdministrador.php";
-    var Id      = $("#txtIdPatente").val();
+    var auto = {
+                    "patente":$("#txtPatente").val()
+                };
+
 
     $.ajax({
         type: 'POST',
         url: pagina,
         dataType: "json",
         data: {
-            queHago: "elimninarAuto",
-            idMascota: Id
+            queHago: "eliminarAuto",
+            auto: auto
         },
         async: true
     }).then(function ok(objJson){

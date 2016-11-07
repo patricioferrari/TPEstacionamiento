@@ -65,14 +65,15 @@ class Estacionamiento
 				
 	}	
 		
-	public static function TraerUnAuto($idParametro) 
+	public static function TraerUnAuto($patente) 
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("select * from Estacionamiento where id =:id");
-		$consulta->bindValue(':id', $idParametro, PDO::PARAM_INT);
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from Estacionamiento where patente =:patente");
+		$consulta->bindValue(':patente', $patente, PDO::PARAM_STR);
 		$consulta->execute();
-		$autoBuscado= $consulta->fetchObject('Estacionamiento');
-		return $personaBuscada;	
+		$autoBuscado= $consulta->fetchObject();
+		//$autoBuscado= $consulta->fetchAll();
+		return $autoBuscado;	
 					
 	}
 	
@@ -86,11 +87,13 @@ class Estacionamiento
 		return $arrEstacionamiento;
 	}
 	
-	public static function BorrarAuto($idParametro)
+	public static function EliminarAuto($Parametro)
 	{	
+		$obj = Estacionamiento::TraerUnAuto($Parametro);
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("delete from Estacionamiento	WHERE id=:id");		
-		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
+		$consulta =$objetoAccesoDato->RetornarConsulta("update Estacionamiento set fsalida = :salida, habilitado = 0 WHERE id=:id");		
+		$consulta->bindValue(':salida',date("d-m-Y h:i:s"), PDO::PARAM_STR);		
+		$consulta->bindValue(':id',$obj->id, PDO::PARAM_INT);
 		$consulta->execute();
 		return $consulta->rowCount();
 		

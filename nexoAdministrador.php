@@ -51,7 +51,7 @@ switch ($queHago) {
     case "cargarFormEliminar":
 
         $form = '<form>   
-                    <input type="text" placeholder="Ingrese ID Auto" id="txtIdPatente" />
+                    <input type="text" placeholder="Ingrese ID Auto" id="txtPatente" />
                     <br>
                     <input type="button" class="MiBotonUTN" onclick="EliminarAuto()" value="Eliminar Auto"  />
                 </form>';
@@ -93,12 +93,12 @@ switch ($queHago) {
         $retorno["Exito"] = TRUE;
         $retorno["Mensaje"] = "";
         
-        $idPatente = isset($_POST['idPatente']) ? $_POST['idPatente'] : NULL;
-        
-//        echo  var_dump($idPatente);
-//        die();
+         if(isset( $_POST['auto'] ))
+        {
+            $obj = json_decode(json_encode($_POST["auto"]));    
+        }
 
-        if (!Estacionamiento::Eliminar($idPatente)) {
+        if (!Estacionamiento::EliminarAuto($obj->patente)) {
             $retorno["Exito"] = FALSE;
             $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo ELIMINAR la patente.";
         } else {
