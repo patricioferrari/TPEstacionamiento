@@ -51,7 +51,7 @@ switch ($queHago) {
     case "cargarFormEliminar":
 
         $form = '<form>   
-                    <input type="text" placeholder="Ingrese ID Auto" id="txtPatente" />
+                    <input type="text" placeholder="Ingrese la patente" id="txtPatente" />
                     <br>
                     <input type="button" class="MiBotonUTN" onclick="EliminarAuto()" value="Eliminar Auto"  />
                 </form>';
@@ -98,12 +98,22 @@ switch ($queHago) {
             $obj = json_decode(json_encode($_POST["auto"]));    
         }
 
-        if (!Estacionamiento::EliminarAuto($obj->patente)) {
+        $obj = Estacionamiento::TraerUnAuto($obj->patente);
+
+        if (!$obj) {
             $retorno["Exito"] = FALSE;
-            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo ELIMINAR la patente.";
-        } else {
-            $retorno["Mensaje"] = "El auto fue eliminada CORRECTAMENTE!!!";
+            $retorno["Mensaje"] = "El vehiculo que quieres sacar no se encuentra estacionado.";
+        } else 
+        {
+            if (!Estacionamiento::EliminarAuto($obj->id)) 
+            {
+                $retorno["Exito"] = FALSE;
+                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo estacionarl el vehiculo.";            
+            } else {
+                $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.";
+            }            
         }
+
 
         echo json_encode($retorno);
         break;
