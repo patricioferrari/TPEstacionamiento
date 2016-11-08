@@ -5,16 +5,12 @@ $queHago = isset($_POST['queHago']) ? $_POST['queHago'] : NULL;
 switch ($queHago) {
     case "mostrarGrilla":
 
-
         require_once 'Estacionamiento.php';
         
         $ArrayDeAutos = Estacionamiento::TraerTodosLosAutos();
 
-        //echo $ArrayDeAutos[0]["id"]."//".$ArrayDeAutos[0]["patente"]."//".$ArrayDeAutos[0]["fingreso"];
-        //die();
-
-        $grilla = '<table class="table">
-                        <thead style="background:rgb(14, 26, 112);color:#fff;">
+        $grilla = '<table class="table" border="2">
+                        <thead style="background:#EAF2A2; border-style:solid;border-color:#1BA045;color:rgb(14, 26, 112); ">
                                 <tr>
                                     <th rowspan="2">  PATENTE </th>
                                     <th rowspan="2">  FECHA INGRESO  </th>
@@ -23,6 +19,7 @@ switch ($queHago) {
         $grilla .= '<tbody>';
 
         foreach ($ArrayDeAutos as $auto) {
+            
             $grilla .= '<tr>';
             $grilla .= '<td>' . $auto["patente"] .'</td>';
             $grilla .= '<td>' . $auto["fingreso"] . '</td>';
@@ -39,8 +36,8 @@ switch ($queHago) {
 
         $form = '<form>   
                     
-                    <label >INGRESAR AUTO:</label>
-                    <input type="text" placeholder="Ingrese PATENTE" id="txtPatente" />
+                    <label >INGRESAR AUTO</label>
+                    <input type="text" placeholder="INGRESAR PATENTE" id="txtPatente" />
                     <input type="button" class="MiBotonUTN" onclick="AgregarAuto()" value="Estacionar Auto"  />
                 </form>';
         
@@ -51,7 +48,8 @@ switch ($queHago) {
     case "cargarFormEliminar":
 
         $form = '<form>   
-                    <input type="text" placeholder="Ingrese la patente" id="txtPatente" />
+                     <label >ELIMINAR AUTO</label>   
+                    <input type="text" placeholder="INGRESAR PATENTE" id="txtPatente" />
                     <br>
                     <input type="button" class="MiBotonUTN" onclick="EliminarAuto()" value="Eliminar Auto"  />
                 </form>';

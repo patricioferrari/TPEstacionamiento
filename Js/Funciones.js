@@ -67,9 +67,7 @@ function AgregarAuto() {
 
     var pagina = "nexoAdministrador.php";
 
-    var auto = {
-                    "patente":$("#txtPatente").val()
-                };//crear objeto JSON
+    var auto = { "patente":$("#txtPatente").val() };
     $.ajax({
         type: 'POST',
         url: pagina,

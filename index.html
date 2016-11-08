@@ -1,11 +1,10 @@
 <html>
     <head>
-        <title> Trabajo Practico - Estacionamiento  </title>
+        <title> TRABAJO PRACTICO - ESTACIONAMIENTO</title>
 
-        <!-- jQuery library -->
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="./Js/Funciones.js"></script>
-
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="estilo.css">
         <link rel="stylesheet" type="text/css" href="animacion.css">
@@ -13,31 +12,32 @@
     <body>
         <div class="container">
             <div class="page-header">
-             
-                
-                <a class='btn btn-default animated bounceInLeft' href='#' onclick='MostrarGrilla()'><span class='glyphicon glyphicon-th'>&nbsp;
-                </span>1-Mostrar Autos&nbsp;</a>
-                <a class='btn btn-info animated bounceInLeft' href='#' onclick='CargarFormAuto()'></span>
-                <span class='glyphicon glyphicon-plus-sign'>&nbsp;</span>2- Agregar Auto&nbsp;</a>
-                <a class='btn btn-danger animated bounceInLeft' href='#' onclick='CargarFormEliminarAuto()'>
-                <span class='glyphicon glyphicon-minus-sign'>&nbsp;</span>3-Eliminar Auto&nbsp;</a>
+            
+                <a class='btn-lg btn-primary animated bounceInLeft' href='#' onclick='MostrarGrilla()'>
+                <span class='glyphicon glyphicon-th'>&nbsp;</span>Mostrar Autos&nbsp;</a>
+                <a class='btn-lg btn-warning animated bounceInLeft' href='#' onclick='CargarFormAuto()'></span>
+                <span class='glyphicon glyphicon-plus-sign'>&nbsp;</span>Agregar Auto&nbsp;</a>
+                <a class='btn-lg btn-warning animated bounceInLeft' href='#' onclick='CargarFormEliminarAuto()'>
+                <span class='glyphicon glyphicon-minus-sign'>&nbsp;</span>Eliminar Auto&nbsp;</a>
     
             </div>            
            
 
             <div class="CajaInicio animated bounceInRight" style="width:900px">
-                <h1>Trabajo Practico - Estacionamiento </h1>
+                
+                <h1>TRABAJO PRACTICO - ESTACIONAMIENTO</h1>
+
                 <table>
                     <tbody>
                         <tr>
-                            <td width="40%">
-                                <div id="divFrm" style="height:220px;overflow:auto;margin-top:10px">
-                                    <br/><br/><h2>Mostrar form aqu&iacute;</h2>
+                            <td width="50%">
+                                <div id="divFrm" style="height:220px;overflow:auto; margin-top:10px">
+                                    <!-- <br/><br/><h2>ESPACIO PARA AGREGAR o ELIMININAR AUTOS</h2>  -->
                                 </div>
                             </td>
                             <td rowspan="2" style="vertical-align:top">
-                                <div id="divGrilla" style="height:550px;overflow:auto;border-style:solid;">
-                                    <br/><br/><h2>Mostrar grilla aqu&iacute;</h2>
+                                <div id="divGrilla" style="height:450px;overflow:auto;">
+                                    <!--<br/><br/><h2>ESPACIO PARA MOSTRAR GRILLAS</h2> -->           
                                 </div>
                             </td>
                         </tr>
