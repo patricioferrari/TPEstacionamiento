@@ -1,6 +1,3 @@
-//$(document).ready(function () )
-//{      }
-
 function MostrarGrilla() {
 
     var pagina = "./nexoAdministrador.php";
@@ -10,6 +7,27 @@ function MostrarGrilla() {
         url: pagina,
         dataType: "text",
         data: {queHago: "mostrarGrilla"},
+        async: true
+        })
+        .then(function ok(tabla) {
+            
+            $("#divGrilla").html(tabla);
+        }
+        ,function error(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+        });
+
+}
+
+function MostrarGrillaFacturacion() {
+
+    var pagina = "./nexoAdministrador.php";
+
+    $.ajax({
+        type: 'POST',
+        url: pagina,
+        dataType: "text",
+        data: {queHago: "mostrarGrillaFacturacion"},
         async: true
         })
         .then(function ok(tabla) {

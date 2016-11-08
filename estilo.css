@@ -111,9 +111,9 @@ input[type="text"], input[type="file"]{
 
 }
 .CajaInicio td{
-	margin:auto;
-	margin-left:0%;
-	text-align: right;
+  margin:auto;
+  margin-left:0%;
+  text-align: right;
 }
 
 caption {
@@ -150,7 +150,7 @@ caption {
   color:#fff;
 }
 .CajaInicio table{
-	width:100%;	
+  width:100%; 
 }
 .CajaInicio table tr td{
 text-align:center;
