@@ -68,6 +68,13 @@ function AgregarAuto() {
     var pagina = "nexoAdministrador.php";
 
     var auto = { "patente":$("#txtPatente").val() };
+
+    if (!Validar(auto)) 
+        {
+            alert("Campo vacio. Por favor completar!"); 
+            return false;
+        }
+
     $.ajax({
         type: 'POST',
         url: pagina,
@@ -93,15 +100,22 @@ function AgregarAuto() {
 
 function EliminarAuto() {
 
-    if (!confirm("Desea ELIMINAR el auto??")) {
-        return;
-    }
+    
 
     var pagina  = "./nexoAdministrador.php";
     var auto = {
                     "patente":$("#txtPatente").val()
                 };
 
+    if (!Validar(auto)) 
+        {
+            alert("Campo vacio. Por favor completar!"); 
+            return false;
+        }
+
+    if (!confirm("Desea ELIMINAR el auto??")) {
+        return;
+    }
 
     $.ajax({
         type: 'POST',
@@ -128,7 +142,7 @@ function EliminarAuto() {
 
 function Validar(objJson) {
 
-    alert("Implementar validaciones...");
-
+    if (objJson.patente == "") 
+        return false;
     return true;
 }

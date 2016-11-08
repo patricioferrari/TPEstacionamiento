@@ -62,7 +62,7 @@ class Estacionamiento
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
-				
+					
 	}	
 		
 	public static function TraerUnAuto($patente) 

@@ -19,7 +19,7 @@ switch ($queHago) {
         $grilla .= '<tbody>';
 
         foreach ($ArrayDeAutos as $auto) {
-            
+            $grilla .='<thead style="background:#EAF2A2; border-style:solid;border-color:#1BA045;color:rgb(14, 26, 112); ">';
             $grilla .= '<tr>';
             $grilla .= '<td>' . $auto["patente"] .'</td>';
             $grilla .= '<td>' . $auto["fingreso"] . '</td>';
@@ -60,28 +60,39 @@ switch ($queHago) {
 
     case "agregarAuto":
 
-        require_once 'Estacionamiento.php';
+    require_once 'Estacionamiento.php';
 
         $retorno["Exito"] = TRUE;
-        $retorno["Mensaje"] = "Se ha creado el AUTO";
-        $obj = null;
+        $retorno["Mensaje"] = "";
+                
         
         if(isset( $_POST['auto'] ))
         {
             $obj = json_decode(json_encode($_POST["auto"]));    
         }
 
+        //var_dump(Estacionamiento::TraerUnAuto($obj->patente));
+        //var_dump($obj->patente);
+        //die();
 
-        if (!Estacionamiento::InsertarAuto($obj->patente))
-        {
-            $retorno["Exito"] = FALSE;
-            $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo agregar la patente.";
-        } else {
-            $retorno["Mensaje"] = "La patente fue agregada CORRECTAMENTE!!!";
-        }
+        if(Estacionamiento::TraerUnAuto($obj->patente))
+            {
+                $retorno["Exito"] = FALSE;   
+                $retorno["Mensaje"] = "El vehiculo que quiere ingresar ya esta estacionado.";
+            }else
+                {
+                    if (!Estacionamiento::InsertarAuto($obj->patente))
+                            {
+                                $retorno["Exito"] = FALSE;
+                                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo agregar la patente.";
+                            } else {
+                                $retorno["Mensaje"] = "La patente fue agregada CORRECTAMENTE!!!";
+                            }
 
+            }
+
+        
         echo json_encode($retorno);
-
         break;
 
     case "eliminarAuto":
@@ -89,6 +100,34 @@ switch ($queHago) {
         require_once 'Estacionamiento.php';
         
         $retorno["Exito"] = TRUE;
+        $retorno["Mensaje"] = "";
+        
+        if(isset( $_POST['auto'] ))
+        {
+            $obj = json_decode(json_encode($_POST["auto"]));    
+        }        
+        
+        $obj = Estacionamiento::TraerUnAuto($obj->patente);
+
+        
+        if (!$obj) {
+            $retorno["Exito"] = FALSE;
+            $retorno["Mensaje"] = "El vehiculo que quieres sacar no se encuentra estacionado.";
+        } else {
+            if (!Estacionamiento::EliminarAuto($obj->id)) {
+                $retorno["Exito"] = FALSE;
+                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo sacar el vehiculo.";            
+            } else {
+                $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.";
+            }            
+        }
+
+
+        
+        echo json_encode($retorno);
+       break;
+
+        /*$retorno["Exito"] = TRUE;
         $retorno["Mensaje"] = "";
         
          if(isset( $_POST['auto'] ))
@@ -106,7 +145,7 @@ switch ($queHago) {
             if (!Estacionamiento::EliminarAuto($obj->id)) 
             {
                 $retorno["Exito"] = FALSE;
-                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo estacionarl el vehiculo.";            
+                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo estacionar el vehiculo.";            
             } else {
                 $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.";
             }            
@@ -114,6 +153,6 @@ switch ($queHago) {
 
 
         echo json_encode($retorno);
-        break;
+        break;*/
 
 }
