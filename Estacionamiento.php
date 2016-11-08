@@ -86,17 +86,32 @@ class Estacionamiento
 		$arrEstacionamiento= $consulta->fetchAll();	
 		return $arrEstacionamiento;
 	}
-	
-	public static function EliminarAuto($id)
-	{	
-		
+	public static function TraerTodosLosAutosEliminados()
+	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("update Estacionamiento set fsalida = :salida, habilitado = 0 WHERE id=:id");		
-		$consulta->bindValue(':salida',date("d-m-Y h:i:s"), PDO::PARAM_STR);		
-		$consulta->bindValue(':id',$id, PDO::PARAM_INT);
+		$consulta =$objetoAccesoDato->RetornarConsulta("select fingreso, patente, fsalida, importe_total from Estacionamiento where fsalida is not null and habilitado = 0");
+		$consulta->execute();			
+		//$arrEstacionamiento= $consulta->fetchAll(PDO::FETCH_CLASS, "Estacionamiento");
+		$arrEstacionamiento= $consulta->fetchAll();	
+		return $arrEstacionamiento;
+	}
+	
+	
+	public static function EliminarAuto($obj)
+	{	
+		$entrada    = strtotime($obj->fingreso);
+        $salida     = strtotime(date("d-m-Y h:i:s"));
+        $segundos   = $salida - $entrada;
+        $costo		= $segundos * 0.05;
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("update estacionamiento set fsalida = :salida, importe_total = :importe, habilitado = 0 WHERE id=:id");	
+		$consulta->bindValue(':salida',  date("d-m-Y h:i:s"), PDO::PARAM_STR);
+		$consulta->bindValue(':importe',  $costo, PDO::PARAM_STR);
+		$consulta->bindValue(':id',$obj->id, PDO::PARAM_INT);		
 		$consulta->execute();
 		return $consulta->rowCount();
-		
+	
 	}
 
 
