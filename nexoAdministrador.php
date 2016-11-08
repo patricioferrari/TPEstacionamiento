@@ -98,9 +98,8 @@ switch ($queHago) {
     case "eliminarAuto":
         
         require_once 'Estacionamiento.php';
-
-
-      $retorno["Exito"] = TRUE;
+        
+        $retorno["Exito"] = TRUE;
         $retorno["Mensaje"] = "";
         
         if(isset( $_POST['auto'] ))
@@ -115,12 +114,11 @@ switch ($queHago) {
             $retorno["Exito"] = FALSE;
             $retorno["Mensaje"] = "El vehiculo que quieres sacar no se encuentra estacionado.";
         } else {
-            if (!Estacionamiento::EliminarAuto($obj)) {
+            if (!Estacionamiento::EliminarAuto($obj->id)) {
                 $retorno["Exito"] = FALSE;
                 $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo sacar el vehiculo.";            
             } else {
-                
-                $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.El monto a pagar es:";
+                $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.";
             }            
         }
 
@@ -129,38 +127,32 @@ switch ($queHago) {
         echo json_encode($retorno);
        break;
 
-    case "mostrarGrillaFacturacion":
-
-        require_once 'Estacionamiento.php';
+        /*$retorno["Exito"] = TRUE;
+        $retorno["Mensaje"] = "";
         
-        $ArrayDeAutos = Estacionamiento::TraerTodosLosAutosEliminados();
-
-        $grilla = '<table class="table" border="4">
-                        <thead style="background:#EAF2A2; border-style:solid;border-color:#1BA045;color:rgb(14, 26, 112); ">
-                                <tr>
-                                    <th rowspan="2">  PATENTE </th>
-                                    <th rowspan="2">  FECHA INGRESO  </th>
-                                    <th rowspan="2">  FECHA EGRESO </th>
-                                    <th rowspan="2">  COSTO  </th>
-                                </tr> 
-                        </thead>';
-        $grilla .= '<tbody>';
-
-        foreach ($ArrayDeAutos as $auto) {
-            $grilla .='<thead style="background:#EAF2A2; border-style:solid;border-color:#1BA045;color:rgb(14, 26, 112); ">';
-            $grilla .= '<tr>';
-            $grilla .= '<td>' . $auto["patente"] .'</td>';
-            $grilla .= '<td>' . $auto["fingreso"] . '</td>';
-            $grilla .= '<td>' . $auto["fsalida"] . '</td>';
-            $grilla .= '<td>' . $auto["importe_total"] . '</td>';
-
-
+         if(isset( $_POST['auto'] ))
+        {
+            $obj = json_decode(json_encode($_POST["auto"]));    
         }
-        $grilla .= '</tr>';
-        $grilla .= '</table>';
-        $grilla .= '<tbody>';
-        echo $grilla;
 
-        break;
-        
+        $obj = Estacionamiento::TraerUnAuto($obj->patente);
+
+        if (!$obj) {
+            $retorno["Exito"] = FALSE;
+            $retorno["Mensaje"] = "El vehiculo que quieres sacar no se encuentra estacionado.";
+        } else 
+        {
+            if (!Estacionamiento::EliminarAuto($obj->id)) 
+            {
+                $retorno["Exito"] = FALSE;
+                $retorno["Mensaje"] = "Lamentablemente ocurrio un error y no se pudo estacionar el vehiculo.";            
+            } else {
+                $retorno["Mensaje"] = "El vehiculo a sido retirado exitosamente.";
+            }            
+        }
+
+
+        echo json_encode($retorno);
+        break;*/
+
 }
